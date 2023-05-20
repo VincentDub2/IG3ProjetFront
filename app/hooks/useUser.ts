@@ -19,7 +19,7 @@ const useUser = (userId: string, sessionToken: string): UseUserResponse => {
     const getUser = async () => {
         setIsLoading(true);
         try {
-            const response = await fetch(`http://localhost:8080/user/actual`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/actual`, {
                 headers: {
                     'Authorization': `Eattrack-Auth-${sessionToken}`,
                 },
@@ -43,7 +43,7 @@ const useUser = (userId: string, sessionToken: string): UseUserResponse => {
     const updateUser = async (updatedUser: User) : Promise<User | void> => {
         setIsLoading(true);
         try {
-            const response  = await axios.post(`http://localhost:8080/user/${userId}`, updatedUser,{ withCredentials: true, headers: {
+            const response  = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/user/${userId}`, updatedUser,{ withCredentials: true, headers: {
                     Authorization: `Eattrack-Auth-${sessionToken}`
             }});
             if (response.status !== 200) {

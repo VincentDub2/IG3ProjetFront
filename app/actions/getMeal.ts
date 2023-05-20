@@ -9,7 +9,7 @@ export async function getFoodEeatToDay(userId : String ,token:String): Promise<M
     const date = moment().format('YYYY-MM-DD');
 
     try {
-        const response = await axios.get(`http://localhost:8080/meals/${userId}/${date}`, { withCredentials: true, headers: {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/meals/${userId}/${date}`, { withCredentials: true, headers: {
                 Authorization: `Eattrack-Auth-${token}`
             }});
         if (response.status !== 200) {

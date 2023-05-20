@@ -44,7 +44,7 @@ const RegisterModal= () => {
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
 
-    axios.post('http://localhost:8080/auth/register', data)
+    axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, data)
     .then(() => {
       toast.success('Registered!');
       registerModal.onClose();

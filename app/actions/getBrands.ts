@@ -3,7 +3,7 @@ import axios from "axios";
 
 export async function fetchBrands(){
     try {
-        const response = await axios.get('http://localhost:8080/brands'); // Remplacez par l'URL de votre API pour récupérer les marques
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/brands`); // Remplacez par l'URL de votre API pour récupérer les marques
 
         if (response.status !== 200) {
             console.error('Error: Cannot get brands');
