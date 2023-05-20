@@ -2,11 +2,16 @@ import NextAuth, {AuthOptions, Profile} from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 import GithubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
+import type { NextAuthOptions } from 'next-auth'
 
 import axios from "axios";
 import provider from "@/app/providers/Provider";
+import Cookies from "js-cookie";
 
-export default NextAuth({
+export const authOptions : NextAuthOptions = {
+  session: {
+    strategy: 'jwt',
+  },
   providers: [
     GithubProvider({
       clientId: process.env.GITHUB_ID as string,
@@ -50,12 +55,13 @@ export default NextAuth({
     async session({session, token, user}){
       if (!token) {
        // session.user.sessionToken=user
+        Cookies.set('Eattrack-Auth', session.user.sessionToken);
       }
+      Cookies.set('Eattrack-Auth', session.user.sessionToken);
       session.user=token as any;
       return session;
   },
   async signIn({user, account, profile}) {
-      console.log(user);
       if (account?.provider === 'github' || account?.provider === 'google') {
         if (!account || !profile) {
             return false
@@ -80,5 +86,6 @@ export default NextAuth({
     }
 },
   debug: process.env.NODE_ENV === 'development',
-})
+}
 
+export default NextAuth(authOptions);

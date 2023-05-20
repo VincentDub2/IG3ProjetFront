@@ -4,7 +4,7 @@ import Provider from '@/app/providers/Provider';
 import Navbar from '@/app/components/navbar/Navbar';
 import LoginModal from '@/app/components/modals/LoginModal';
 import RegisterModal from '@/app/components/modals/RegisterModal';
-
+import { ChakraProvider } from '@chakra-ui/react';
 import ToasterProvider from '@/app/providers/ToasterProvider';
 
 import './globals.css'
@@ -43,7 +43,7 @@ export default async function RootLayout({
           <AddProductModal />
           <Navbar />
         </ClientOnly>
-        <div className="pb-20 pt-10">
+        <div className="pb-36 pt-16">
           {children}
         </div>
         </Provider>

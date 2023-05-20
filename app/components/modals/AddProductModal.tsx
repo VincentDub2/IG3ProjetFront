@@ -23,6 +23,8 @@ import useAddProductModal from "@/app/hooks/useAddProductModal";
 import BrandSelect from "@/app/components/inputs/BrandSelect";
 import getCurrentUser from "@/app/actions/getCurrentUser";
 import brandSelect from "@/app/components/inputs/BrandSelect";
+import useFood from "@/app/hooks/useFood";
+import {Food} from "@/app/types";
 
 
 
@@ -38,9 +40,8 @@ const AddProductModal = () => {
     const { data: session } = useSession();
 
     const router = useRouter(); // Inutile
-    const addProductModal = useAddProductModal();
 
-    const [isLoading, setIsLoading] = useState(false);
+    const addProductModal = useAddProductModal();
 
     const [step, setStep] = useState(STEPS.NAME);
 
@@ -103,6 +104,11 @@ const AddProductModal = () => {
         setStep((value) => value + 1);
     }
 
+    const userId = session?.user?.id ?? '';
+    const sessionToken = session?.user?.sessionToken ?? '';
+
+    const { addFood,isLoading,deleteFood,getAllFoodFromThisUser, foods,error } = useFood(userId, sessionToken)
+
     const onSubmit: SubmitHandler<FieldValues> = (data) => {
         if (step !== STEPS.OPTIONAL_NUTRIENTS) {
             return onNext();
@@ -113,13 +119,11 @@ const AddProductModal = () => {
             toast.error('You must be logged in to create a listing.');
             return;
         }
-        console.log(session.user);
 
-        setIsLoading(true);
         const brandToUse = data.brandName || data.brandSelected.name;
 
         // Convertir les valeurs en nombres
-        const numericalData = {
+        const numericalData : Food = {
             ...data,
             calories: Number(data.calories),
             protein: Number(data.protein),
@@ -129,43 +133,24 @@ const AddProductModal = () => {
             fiber: Number(data.fiber),
             salt: Number(data.salt),
             servingSize: Number(data.servingSize),
-            vitamins: Number(data.vitamins),
-            minerals: Number(data.minerals),
-            allergens: Number(data.allergens),
             brandName : brandToUse,
+            id: '',
+            userId: userId,
+            barcode: '',
+            createdAt: '',
+            updatedAt: '',
+            brand: '',
+            approved: false,
+            vitamins: '',
+            minerals: '',
+            allergens: '',
+            foodCategory: foodCategory,
+            name: data.name,
         }
-
-        console.log(data);
-        console.log("Le sessions token est : ",session?.user.sessionToken);
-        axios.post('http://localhost:8080/food/add', numericalData, { headers: {
-                Authorization: `Eattrack-Auth-${session?.user.sessionToken}`,
-
-            }, })
-            .then(() => {
-                toast.success('Listing created!');
-                router.refresh();
-                reset();
-                setStep(STEPS.NAME);
-            })
-            .catch((error) => {
-                if (error.response) {
-                    // La requête a été faite et le serveur a répondu avec un statut d'erreur
-                    console.log(error.response.data);
-                    console.log(error.response.status);
-                    console.log(error.response.headers);
-                } else if (error.request) {
-                    // La requête a été faite mais aucune réponse n'a été reçue
-                    console.log(error.request);
-                } else {
-                    // Quelque chose s'est mal passé lors de la mise en place de la requête
-                    console.log('Error', error.message);
-                }
-                console.log(error.config);
-                toast.error('Something went wrong.');
-            })
-            .finally(() => {
-                setIsLoading(false);
-            });
+        const food = addFood(numericalData as Food);
+        reset();
+        setStep(STEPS.NAME)
+        addProductModal.onClose();
     }
 
     const actionLabel = useMemo(() => {

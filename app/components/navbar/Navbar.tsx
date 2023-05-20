@@ -1,5 +1,4 @@
 'use client';
-import { SafeUser } from "@/app/types";
 
 
 import Container from "../Container";
@@ -15,7 +14,7 @@ import { useSession } from "next-auth/react";
 const Navbar: React.FC = () => {
     const { data: session } = useSession();
   return ( 
-    <div className="fixed w-full bg-white z-10 shadow-sm">
+    <div className="fixed w-full bg-white z-20 shadow-sm">
       <div
         className="
           py-4 

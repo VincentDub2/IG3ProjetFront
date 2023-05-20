@@ -1,61 +1,17 @@
-import { User } from "@prisma/client";
 
-
-
-export type SafeUser = Omit<
-  User,
-  "createdAt" | "updatedAt" | "emailVerified"
-> & {
-  createdAt: string;
-  updatedAt: string;
-  emailVerified: string | null;
-  favorite: SafeFavorite[];
-};
-
-export type SafeFavorite = {
-  id: string;
-  favoriteId: string;
-  userId: string;
-};
-/*
-model Food {
-  id           String       @id @default(uuid()) @map("_id")
-  name         String
-  barcode      String?
-      createdAt    DateTime     @default(now())
-  updatedAt    DateTime     @updatedAt
-  brand        String?
-      user         User?        @relation(fields: [userId], references: [id], onDelete: SetNull)
-  userId       String?
-      calories     Float
-  protein      Float
-  fat          Float
-  carbs        Float
-  fiber        Float?
-      salt         Float?
-          servingSize  Int          @default(100) // En g or ml par defaut 100
-  vitamins     String?
-      minerals     String?
-          allergens    String?
-              foodCategory String?
-                  approved     Boolean      @default(false)
-  userFavori   UserFavori[]
-  meal         Meal[]
-}
-
- */
 export type Food = {
-    _id: string;
+    id  : string;
     name: string;
     barcode: string | null;
     createdAt: string;
     updatedAt: string;
     brand: string | null;
-    user: SafeUser | null;
+    brandName: string | null;
     userId: string | null;
     calories: number;
     protein: number;
     fat: number;
+    sugar: number | null;
     carbs: number;
     fiber: number | null;
     salt: number | null;
@@ -98,4 +54,34 @@ export type MealType = {
     approved: boolean;
     quantity: number;
     mealType: 'breakfast' | 'lunch' | 'dinner' | 'snack';
+};
+
+export type User = {
+    name: string;
+    email: string;
+    id: string;
+    emailVerified: string | null;
+    image: string | null;
+    weight: number | null;
+    size: number | null;
+    hashedPassword: string;
+    createdAt: string;
+    updatedAt: string;
+    age: number | null;
+    gender: string | null;
+    goalType: string | null;
+    activityLevel: string | null;
+    targetWeight: number | null;
+    dailyCalories: number | null;
+    dailyProtein: number | null;
+    dailyFat: number | null;
+    dailyCarbs: number | null;
+    percentageProtein: number;
+    percentageFat: number;
+    percentageCarbs: number;
+};
+
+export type Session = {
+    user: User;
+    expires: string;
 };

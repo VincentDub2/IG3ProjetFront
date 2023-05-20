@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 
 import useLoginModal from "@/app/hooks/useLoginModal";
 import useRegisterModal from "@/app/hooks/useRegisterModal";
-import { SafeUser } from "@/app/types";
 
 import MenuItem from "./MenuItem";
 import Avatar from "../Avatar";
@@ -33,19 +32,15 @@ const UserMenu: React.FC<UserMenuProps> = ({
     setIsOpen((value) => !value);
   }, []);
 
-  const onRent = useCallback(() => {
-    if (!currentUser) {
-      return loginModal.onOpen();
-    }
-    //Open rent modal
-
-  }, [loginModal, currentUser]);
+  const onOpenAboutUs = useCallback(() => {
+    router.push('/aboutUs');
+  }, []);
 
   return ( 
     <div className="relative">
       <div className="flex flex-row items-center gap-3">
         <div 
-          onClick={onRent}
+          onClick={onOpenAboutUs}
           className="
             hidden
             md:block
@@ -105,7 +100,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
               <>
                 <MenuItem 
                   label="My foods"
-                  onClick={() => router.push('/trips')}
+                  onClick={() => router.push('/myFood')}
                 />
                 <MenuItem 
                   label="My favorites" 

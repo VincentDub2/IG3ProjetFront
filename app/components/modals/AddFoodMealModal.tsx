@@ -15,22 +15,29 @@ import {number} from "prop-types";
 import {Food} from "@/app/types";
 import useDate from "@/app/hooks/useDate";
 import {useSession} from "next-auth/react";
+import {useRouter} from "next/navigation";
+import useFood from "@/app/hooks/useFood";
 
 type FoodType = {
     food :Food;
     isOpen: boolean;
     onClose: () => void;
-    userId: string | undefined;
 };
 
-const AddFoodModal: React.FC<FoodType> = ({ food, isOpen, onClose ,userId}) => {
+const AddFoodModal: React.FC<FoodType> = ({ food, isOpen, onClose }) => {
     const [grams, setGrams] = useState('');
     const [meal, setMeal] = useState('');
     const loginModal = useLoginModal();
     const [isLoading, setIsLoading] = useState(false);
+    const router = useRouter();
 
     const {data: session} = useSession();
 
+    const userId = session?.user?.id ?? '';
+
+    const sessionToken = session?.user?.sessionToken ?? '';
+
+    const { addFood } = useFood(userId, sessionToken)
 
     const mealOptions  = [
         { value: 'breakfast', label: 'Breakfast' },
@@ -43,21 +50,20 @@ const AddFoodModal: React.FC<FoodType> = ({ food, isOpen, onClose ,userId}) => {
 
     const handleSubmit = () => {
 
-        if (!userId) {
+        if (!userId || userId === '') {
             toast('Please login first');
             loginModal.onOpen();
             return;
         }
 
-        console.log(food);
 
-        if(!food._id){
+        if(!food.id){
             toast('Something went wrong');
             return;
         }
         // Handle form submission logic here
         const data ={
-            foodId: food._id,
+            foodId: food.id,
             mealType : meal,
             userId: userId,
             quantity: Number(grams),
@@ -66,13 +72,15 @@ const AddFoodModal: React.FC<FoodType> = ({ food, isOpen, onClose ,userId}) => {
 
         setIsLoading(true);
 
-        axios.post('http://localhost:8080/meal/add', data,{ headers: {
+
+        axios.post(`${process.env.NEXT_PUBLIC_API_URL as string}/meal/add`, data,{ headers: {
                 Authorization: `Eattrack-Auth-${session?.user.sessionToken}`}})
             .then(() => {
                 toast.success('Food added!');
-
+                router.refresh();
             })
             .catch((error) => {
+                console.log(error);
                 toast.error(error.message);
             })
             .finally(() => {

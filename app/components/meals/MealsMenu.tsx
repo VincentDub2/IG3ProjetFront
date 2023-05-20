@@ -6,49 +6,45 @@ import { useEffect, useState } from "react";
 import { MealType } from "@/app/types";
 import { useSession } from "next-auth/react";
 import useMeal from "@/app/hooks/useMeal";
+import Circle from "@/app/components/CircleNutrients/Circle";
 
-const MealsMenu = () => {
-    const { data: session } = useSession();
-    const { getAllMealFood} = useMeal(session?.user.id, session?.user.sessionToken);
 
-    const [meals, setMeals] = useState<MealType[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
+interface MealsMenuProps {
+    meals: MealType[];
+}
 
-    console.log("MealsMenu.tsx: ", meals);
-
-    useEffect(() => {
-        const fetchMeals = async () => {
-            if (session && session.user) {
-                const data = await getAllMealFood()
-                setMeals(data);
-                setIsLoading(false);
-            }
-        };
-
-        fetchMeals();
-    }, [session, getAllMealFood]);
-
-    if (isLoading) {
-        return <div className="flex justify-center items-center text-gray-500 text-lg">Loading...</div>;
-    }
+const MealsMenu : React.FC<MealsMenuProps> = ({meals}) => {
 
     return (
-        <div className="bg-white
+        <div className="
+        grid
+        grid-cols-1
+        sm:grid-cols-1
+        md:grid-cols-2
+        lg:grid-cols-2
+        xl:grid-cols-2
+        2xl:grid-cols-4
+        bg-gray-100
         shadow-sm
         rounded-lg
         p-4
-        xl:max-w-lg
-        sm:max-w-lg
-        lg:max-w-lg
         mx-auto
-        w-full
         sm:w-auto
         space-y-4
-        min-h-[20rem]">
-            <Meal label="breakfast" icon={MdFreeBreakfast} foods={meals.filter((meal) => meal.mealType === "breakfast")} />
-            <Meal label="lunch" icon={GiChickenOven} foods={meals.filter((meal) => meal.mealType === "lunch")} />
-            <Meal label="dinner" icon={GiHotMeal} foods={meals.filter((meal) => meal.mealType === "dinner")} />
-            <Meal label="snack" icon={GiShinyApple} foods={meals.filter((meal) => meal.mealType === "snack")} />
+        sm:max-h-screen
+        sm:overflow-y-auto
+        min-h-[400px]
+        ">
+            <div className="grid grid-cols-2 gap-4 md:col-span-2 lg:col-span-2 xl:col-span-2 2xl:col-span-2">
+                <div className="grid grid-cols-1">
+                    <Meal label="breakfast" icon={MdFreeBreakfast} foods={meals.filter((meal) => meal.mealType === "breakfast")} />
+                    <Meal label="lunch" icon={GiChickenOven} foods={meals.filter((meal) => meal.mealType === "lunch")} />
+                </div>
+                <div className="grid grid-cols-1">
+                    <Meal label="dinner" icon={GiHotMeal} foods={meals.filter((meal) => meal.mealType === "dinner")} />
+                    <Meal label="snack" icon={GiShinyApple} foods={meals.filter((meal) => meal.mealType === "snack")} />
+                </div>
+            </div>
         </div>
     );
 };

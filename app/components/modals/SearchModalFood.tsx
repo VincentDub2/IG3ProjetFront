@@ -11,8 +11,8 @@ import Button from "@/app/components/Button";
 import Search from "@/app/components/navbar/Search";
 
 import useAddProductModal from "@/app/hooks/useAddProductModal";
-import {AiOutlinePlusCircle, MdError} from "react-icons/all";
-import {AiOutlinePlus} from "react-icons/ai";
+import {MdError} from "react-icons/md";
+import {AiOutlinePlus,AiOutlinePlusCircle} from "react-icons/ai";
 import addFoodMealModal from "@/app/components/modals/AddFoodMealModal";
 import AddFoodModal from "@/app/components/modals/AddFoodMealModal";
 import {useSession} from "next-auth/react";
@@ -133,7 +133,6 @@ const SearchModalFood = () => {
                                         isOpen={isModalOpen}
                                         onClose={() => setIsModalOpen(false)}
                                         food={selectedFood}
-                                        userId={session.data?.user.id}
                                     />
                                 )}
                             </div>
