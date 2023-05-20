@@ -1,27 +1,25 @@
 'use client';
 
-import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import {
     FieldValues,
     SubmitHandler,
     useForm
 } from 'react-hook-form';
-import dynamic from 'next/dynamic'
+
 import { useRouter } from 'next/navigation';
 import { useMemo, useState } from "react";
 
 
-import Modal from "./Modal";
-import CategoryInput from '../inputs/CategoryInput';
-import { categories } from '../navbar/Categories';
-import Input from '../inputs/Input';
-import Heading from '../Heading';
+import Modal from "@/app/components/modals/Modal";
+import CategoryInput from '@/app/components/inputs/CategoryInput';
+import { categories } from '@/app/components/Categories';
+import Input from '@/app/components/inputs/Input';
+import Heading from '@/app/components/Heading';
 import { useSession } from "next-auth/react";
 
 import useAddProductModal from "@/app/hooks/useAddProductModal";
 import BrandSelect from "@/app/components/inputs/BrandSelect";
-import getCurrentUser from "@/app/actions/getCurrentUser";
 import brandSelect from "@/app/components/inputs/BrandSelect";
 import useFood from "@/app/hooks/useFood";
 import {Food} from "@/app/types";

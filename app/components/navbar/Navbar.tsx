@@ -5,7 +5,6 @@ import Container from "../Container";
 import Logo from "./Logo";
 import Search from "./Search";
 import UserMenu from "./UserMenu";
-import Categories from "@/app/components/navbar/Categories";
 import { useSession } from "next-auth/react";
 
 
