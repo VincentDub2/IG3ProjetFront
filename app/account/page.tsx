@@ -2,13 +2,13 @@
 
 import {FieldValues, SubmitHandler, useForm} from "react-hook-form";
 import { toast } from "react-hot-toast";
-import InputAccount from "./InputAccount";
+import InputAccount from "./component/InputAccount";
 import useUser from "../hooks/useUser";
 import {User} from "@/app/types";
 import {useSession} from "next-auth/react";
 import ClientOnly from "@/app/components/ClientOnly";
 import {useEffect, useState} from "react";
-import Select from "@/app/account/Select";
+import Select from "@/app/account/component/Select";
 import sanitizeUserInput from "@/app/service/sanatizeUserInput";
 
 import useLoginModal from "@/app/hooks/useLoginModal";
@@ -22,13 +22,14 @@ const Account = () => {
 
     const { data: session } = useSession();
 
-    if (!session) {
+    useEffect(() => {
+        if (!session) {
+            router.push('/');
+            toast("You must be logged in to view this page.");
+            loginModal.onOpen();
+        }
+    }, [session]);
 
-        router.push('/');
-
-        toast("You must be logged in to view this page.");
-        loginModal.onOpen();
-    }
 
     const userId = session?.user?.id ?? '';const sessionToken = session?.user?.sessionToken ?? '';
 

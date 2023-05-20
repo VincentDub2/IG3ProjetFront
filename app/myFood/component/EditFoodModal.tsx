@@ -3,7 +3,7 @@
 
 import {useState} from 'react';
 import Modal from "@/app/components/modals/Modal";
-import { Food } from '../types';
+import { Food } from '../../types';
 
 interface EditFoodModalProps {
     isOpen: boolean;

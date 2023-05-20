@@ -3,7 +3,7 @@
 
 import React, { useEffect, useState } from 'react';
 
-import FoodList from './FoodList';
+import FoodList from './component/FoodList';
 import useLoginModal from "@/app/hooks/useLoginModal";
 
 import {useRouter} from "next/navigation";
@@ -22,7 +22,7 @@ import useAddProductModal from "@/app/hooks/useAddProductModal";
 
 
 import { ChakraProvider } from '@chakra-ui/react';
-import EditFoodModal from "@/app/myFood/EditFoodModal";
+import EditFoodModal from "@/app/myFood/component/EditFoodModal";
 import {Food} from "@/app/types";
 import useEditFoodModal from "@/app/hooks/useEditFoodModal";
 const MyFood = () => {
@@ -42,15 +42,13 @@ const MyFood = () => {
 
     setTimeout(() => {}, 1000); // On a timer to avoid a warning
 
-    if (!session?.user) {
-
-        router.push('/');
-
-        setTimeout(() => {
+    useEffect(() => {
+        if (!session) {
+            router.push('/');
             toast("You must be logged in to view this page.");
             loginModal.onOpen();
-        }, 1000);
-    }
+        }
+    }, [session]);
 
     const userId = session?.user?.id ?? '';
     const sessionToken = session?.user?.sessionToken ?? '';

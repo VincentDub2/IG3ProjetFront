@@ -1,6 +1,6 @@
 'use client'
 import { Box, Stack } from '@chakra-ui/react';
-import FoodItem from "@/app/myFood/FoodItem";
+import FoodItem from "@/app/myFood/component/FoodItem";
 import { Food } from "@/app/types";
 
 interface FoodListProps {
