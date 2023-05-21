@@ -70,7 +70,13 @@ const SearchModalFood = () => {
 
     const fetchData = async (term : string) => {
         const results = await getFoodSearch(term);
-        setFoods(results);
+        if (!results) {
+            setFoods([]);
+            return;
+        }else {
+            setFoods(results);
+            return;
+        }
     };
 
 
