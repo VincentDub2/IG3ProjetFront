@@ -38,7 +38,7 @@ export const authOptions : NextAuthOptions = {
       },
       async authorize (credentials,req){
 
-        const response  = await axios.post('http://localhost:8080/auth/login', credentials);
+        const response  = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, credentials);
         const user = response.data;
         if (user) {
           return user;
@@ -66,7 +66,7 @@ export const authOptions : NextAuthOptions = {
         if (!account || !profile) {
             return false
         }
-        const response = await axios.post('http://localhost:8080/socialLog', {
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/socialLog`, {
           id: account.userId,
           name: profile.name,
           email: profile.email,
