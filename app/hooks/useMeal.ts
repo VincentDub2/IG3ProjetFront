@@ -36,6 +36,9 @@ const useMealFoods = (userId: string, sessionToken: string): UseMealFoodsRespons
     const [totalLipids, setTotalLipids] = useState(0);
 
     const getAllMealFoods = async () => {
+        if (!userId || !sessionToken) {
+            return;
+        }
         try {
             const date = Date();
             console.log(sessionToken, userId)
@@ -60,6 +63,11 @@ const useMealFoods = (userId: string, sessionToken: string): UseMealFoodsRespons
         }
     };
     const addMealFood = async (newMealFood: MealFoodPost) => {
+        if (!userId || !sessionToken) {
+            toast.error('We must be connected to add a meal');
+            return false;
+        }
+
         try {
             console.log(newMealFood);
             const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/meal/add`, newMealFood,
