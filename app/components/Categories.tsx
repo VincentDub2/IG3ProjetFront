@@ -1,27 +1,31 @@
 'use client';
 
 import { usePathname, useSearchParams } from 'next/navigation';
-import { TbBeach, TbMountain, TbPool } from 'react-icons/tb';
 import {
-    GiBarn,
-    GiBoatFishing,
-    GiCactus,
-    GiCastle,
-    GiCaveEntrance,
-    GiForestCamp,
-    GiIsland, GiMeat, GiChickenLeg,
-    GiWindmill, GiFriedFish, GiCroissant
+
+    GiMeat,
+    GiChickenLeg,
+
+    GiFriedFish,
+    GiCroissant,
+    GiSaucepan,
+    GiBanana,
+    GiMilkCarton,
+    GiWaterBottle,
+    GiSlicedBread,
+    GiBroccoli,
+    GiCupcake, GiButter, GiHamburger, GiCheeseWedge
 } from 'react-icons/gi';
 import { BiBowlRice } from 'react-icons/bi';
 
-import { FaSkiing } from 'react-icons/fa';
-import { BsSnow } from 'react-icons/bs';
-import { IoDiamond } from 'react-icons/io5';
+import {FaCandyCane, FaUtensils} from 'react-icons/fa';
+
 
 
 import Container from './Container';
 
 import CategoryBox from "@/app/components/CategoryBox";
+import {CiWheat} from "react-icons/all";
 
 
 export const categories = [
@@ -51,59 +55,69 @@ export const categories = [
         description: ''
     },
     {
-        label: 'Pools',
-        icon: TbPool,
-        description: 'This is property has a beautiful pool!'
+        label: 'Sauce',
+        icon: GiSaucepan,
+        description: ''
     },
     {
-        label: 'Islands',
-        icon: GiIsland,
-        description: 'This property is on an island!'
+        label: 'Fruit',
+        icon: GiBanana,
+        description: ''
     },
     {
-        label: 'Lake',
-        icon: GiBoatFishing,
-        description: 'This property is near a lake!'
+        label: 'Yogurt',
+        icon: GiMilkCarton,
+        description: ''
     },
     {
-        label: 'Skiing',
-        icon: FaSkiing,
-        description: 'This property has skiing activies!'
+        label: 'Soda',
+        icon: GiWaterBottle,
+        description: ''
     },
     {
-        label: 'Castles',
-        icon: GiCastle,
-        description: 'This property is an ancient castle!'
+        label: 'Bread',
+        icon: GiSlicedBread,
+        description: ''
     },
     {
-        label: 'Caves',
-        icon: GiCaveEntrance,
-        description: 'This property is in a spooky cave!'
+        label: 'Pasta',
+        icon: FaUtensils,
+        description: ''
     },
     {
-        label: 'Camping',
-        icon: GiForestCamp,
-        description: 'This property offers camping activities!'
+        label: 'Cereal',
+        icon: CiWheat,
+        description: ''
     },
     {
-        label: 'Arctic',
-        icon: BsSnow,
-        description: 'This property is in arctic environment!'
+        label: 'Vegetables',
+        icon: GiBroccoli,
+        description: ''
     },
     {
-        label: 'Desert',
-        icon: GiCactus,
-        description: 'This property is in the desert!'
+        label: 'Cake',
+        icon: GiCupcake,
+        description: ''
     },
     {
-        label: 'Barns',
-        icon: GiBarn,
-        description: 'This property is in a barn!'
+        label: 'fat and oil',
+        icon: GiButter,
+        description: ''
     },
     {
-        label: 'Lux',
-        icon: IoDiamond,
-        description: 'This property is brand new and luxurious!'
+        label: 'Candy',
+        icon: FaCandyCane,
+        description: ''
+    },
+    {
+        label: 'Fast food',
+        icon: GiHamburger,
+        description: ''
+    },
+    {
+        label: 'Cheese',
+        icon: GiCheeseWedge,
+        description: ''
     }
 ]
 
