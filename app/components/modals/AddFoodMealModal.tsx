@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import Modal from './Modal';
 import Button from '../Button';
 import Select from 'react-select';
@@ -17,6 +17,7 @@ import useDate from "@/app/hooks/useDate";
 import {useSession} from "next-auth/react";
 import {useRouter} from "next/navigation";
 import useFood from "@/app/hooks/useFood";
+import useMeal from "@/app/hooks/useMeal";
 
 type FoodType = {
     food :Food;
@@ -37,7 +38,7 @@ const AddFoodModal: React.FC<FoodType> = ({ food, isOpen, onClose }) => {
 
     const sessionToken = session?.user?.sessionToken ?? '';
 
-    const { addFood } = useFood(userId, sessionToken)
+    const {addMealFood} =useMeal(userId,sessionToken);
 
     const mealOptions  = [
         { value: 'breakfast', label: 'Breakfast' },
@@ -48,7 +49,7 @@ const AddFoodModal: React.FC<FoodType> = ({ food, isOpen, onClose }) => {
 
     const date = useDate();
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
 
         if (!userId || userId === '') {
             toast('Please login first');
@@ -56,12 +57,11 @@ const AddFoodModal: React.FC<FoodType> = ({ food, isOpen, onClose }) => {
             return;
         }
 
-
         if(!food.id){
             toast('Something went wrong');
             return;
         }
-        // Handle form submission logic here
+
         const data ={
             foodId: food.id,
             mealType : meal,
@@ -72,20 +72,12 @@ const AddFoodModal: React.FC<FoodType> = ({ food, isOpen, onClose }) => {
 
         setIsLoading(true);
 
+        const res = await addMealFood(data);
 
-        axios.post(`${process.env.NEXT_PUBLIC_API_URL as string}/meal/add`, data,{ headers: {
-                Authorization: `Eattrack-Auth-${session?.user.sessionToken}`}})
-            .then(() => {
-                toast.success('Food added!');
-                router.refresh();
-            })
-            .catch((error) => {
-                console.log(error);
-                toast.error(error.message);
-            })
-            .finally(() => {
-                setIsLoading(false);
-            })
+        if(res){
+            onClose();
+        }
+        setIsLoading(false);
     }
 
     const bodyContent = (

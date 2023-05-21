@@ -1,3 +1,4 @@
+import meal from "@/app/components/meals/Meal";
 
 export type Food = {
     id  : string;
@@ -85,3 +86,12 @@ export type Session = {
     user: User;
     expires: string;
 };
+
+export type MealFoodPost = {
+    foodId: string,
+    mealType : string,
+    userId: string,
+    quantity: number,
+    date : string,
+}
+
