@@ -12,7 +12,7 @@ const AboutPage = () => {
                     for commercial use.
                     This website was built with NEXT.js 13, a React framework.
                     It uses TypeScript, Tailwind CSS, and Prisma.
-                    An api was alors built with Node.js and Express.
+                    An api was built with Node.js and Express.
                 </p>
                 <p className="text-gray-600 text-lg mt-4">
                     The site was inspired by the minimalist design principles of companies like
