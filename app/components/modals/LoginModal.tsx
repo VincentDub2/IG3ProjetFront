@@ -126,17 +126,19 @@ const LoginModal = () => {
         outline 
         label="Continue with Google"
         icon={FcGoogle}
-        onClick={() => signIn('google')}
+        //onClick={() => signIn('google')}
+        onClick={() => signIn('google', { callbackUrl: 'https://eattrack.vercel.app/' })}
       />
       <Button 
         outline 
         label="Continue with Github"
         icon={AiFillGithub}
-        onClick={() => signIn('github')}
+        //{onClick={() => signIn('github')}}
+        onClick={() => signIn('github', { callbackUrl: 'https://eattrack.vercel.app/' })}
       />
       <div className="
       text-neutral-500 text-center mt-4 font-light">
-        <p>First time using Airbnb?
+        <p>First time using EatTrack?
           <span 
             onClick={onToggle} 
             className="
