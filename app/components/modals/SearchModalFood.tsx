@@ -63,6 +63,11 @@ const SearchModalFood = () => {
     // Gestion d'ouverture du formulaire d'ajoute d'alimment
     // et fermeture de la modal de recherche
     const onToggle = useCallback(() => {
+        if (session.status === 'unauthenticated') {
+            toast.error('Vous devez être connecté pour ajouter un aliment');
+            return;
+        }
+
         addProductModal.onOpen();
         searchModal.onClose();
 
