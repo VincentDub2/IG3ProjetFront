@@ -50,6 +50,7 @@ const AddFoodModal: React.FC<FoodType> = ({ food, isOpen, onClose }) => {
     const date = useDate();
 
     const handleSubmit = async () => {
+        console.log(session?.user);
 
         if (!userId || userId === '') {
             toast('Please login first');

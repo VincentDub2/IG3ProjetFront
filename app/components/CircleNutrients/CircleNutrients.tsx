@@ -28,7 +28,10 @@ const CircleNutrients : React.FC<CircleNutrientsProps> = ({
 
                                                           }) => {
     return (
-        <div>
+        <div className="">
+            <div className="flex justify-center">
+                <p className="text-center text-xl text-neutral-500">How many nutrients you can eat today</p>
+            </div>
             <div className="mr-2 ml-2">
             <Circle consumed={consumed} total={total} color="#f43f5e"/>
              </div>

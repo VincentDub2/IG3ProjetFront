@@ -1,5 +1,15 @@
-'use client'
-import { useState } from 'react';
+// Import Swiper React components
+import { Swiper, SwiperSlide } from "swiper/react";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/effect-cards";
+
+// import Swiper core and required modules
+import SwiperCore, { EffectCards } from 'swiper';
+
+// install Swiper modules
+SwiperCore.use([EffectCards]);
 
 const NutritionAdvice: React.FC = () => {
     const advices = [
@@ -9,46 +19,32 @@ const NutritionAdvice: React.FC = () => {
         "Consume 3-4 fresh fruits a day for vitamin & mineral intake.",
         "Have legumes (lentils, chickpeas, red beans, coral lentils, split peas...) 3-4 times a week.",
         "Eat a handful of nuts a day (about 20-30g) for polyunsaturated fatty acid, protein, vitamin, and mineral intake.",
-        "Vary your cooking oils daily: For cooking, prioritize olive oil, coconut oil, and sunflower oil (for high-temperature cooking). For dressing, prioritize walnut oil, canola oil, flaxseed oil, camelina oil (source of vegetable omega 3) & olive oil.",
+        "Vary your cooking oils daily: For cooking, prioritize olive oil, coconut oil, and sunflower oil .",
+        "For dressing, prioritize walnut oil, canola oil, flaxseed oil, camelina oil (source of vegetable omega 3) & olive oil.",
         "Opt for semi-whole to whole starchy foods and vary the sources."
     ];
 
-    const [currentAdvice, setCurrentAdvice] = useState(0);
-
-    const nextAdvice = () => {
-        setCurrentAdvice((currentAdvice + 1) % advices.length);
-    };
-
-    const previousAdvice = () => {
-        setCurrentAdvice((currentAdvice - 1 + advices.length) % advices.length);
-    };
-
     return (
-        <div className="
-        flex
-        items-center
-        justify-center
-        bg-gray-100
-        p-8
-        rounded-lg
-        shadow-md
-        h-[400px]
-        overflow-auto
-        ">
-            <button onClick={previousAdvice} className="text-rose-500 text-2xl font-bold px-4 hover:text-rose-700">
-                &lt;
-            </button>
-            <div className="flex flex-col items-center">
-                <h2 className="text-2xl font-bold mb-6 ">Nutrition Advice:</h2>
-                <div className="text-lg mb-6 leading-relaxed">
-                    {advices[currentAdvice]}
-                </div>
+        <div className="advice-container">
+            <div className="advice-card-container">
+                <Swiper
+                    effect={"cards"}
+                    grabCursor={true}
+                    modules={[EffectCards]}
+                    className="mySwiper nutrition-advice-carousel"
+                >
+                    {advices.map((advice, index) => (
+                        <SwiperSlide key={index} className="nutrition-advice-slide">
+                            <div className="swiper-content">
+                                {advice}
+                            </div>
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
             </div>
-            <button onClick={nextAdvice} className="text-rose-500 text-2xl font-bold px-4 hover:text-rose-700">
-                &gt;
-            </button>
         </div>
     );
 };
+
 
 export default NutritionAdvice;

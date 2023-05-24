@@ -1,18 +1,16 @@
-
+//layout.tsx
 import { Nunito } from 'next/font/google'
 import Provider from '@/app/providers/Provider';
 import Navbar from '@/app/components/navbar/Navbar';
 import LoginModal from '@/app/components/modals/LoginModal';
 import RegisterModal from '@/app/components/modals/RegisterModal';
-import { ChakraProvider } from '@chakra-ui/react';
 import ToasterProvider from '@/app/providers/ToasterProvider';
-
 import './globals.css'
 import ClientOnly from './components/ClientOnly';
-import getCurrentUser from './actions/getCurrentUser';
 import SearchModalFood from "@/app/components/modals/SearchModalFood";
 import AddProductModal from "@/app/components/modals/AddProductModal";
-import {useSession} from "next-auth/react";
+import Head from "next/head";
+
 
 
 export const metadata = {
@@ -32,6 +30,9 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
+        <Head>
+                <link rel="icon" href="./WebSiteIcon.png" sizes="any" />
+        </Head>
 
       <body className={font.className}>
         <Provider>

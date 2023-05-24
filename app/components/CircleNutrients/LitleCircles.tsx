@@ -23,15 +23,15 @@ const LitleCircles : React.FC<LittleCirclesProps> = ({
         justify-around
         ">
             <div className="flex flex-col ">
-                <Circle consumed={proteinValue} total={proteinTarget} color="#F59E0B" /> {/* Amber-500 for Protein */}
+                <Circle consumed={proteinValue} total={proteinTarget} color="#93c5fd" /> {/* Amber-500 for Protein */}
                 <p className="text-center text-xs text-neutral-500">Proteins</p>
             </div>
             <div className="flex flex-col ">
-                <Circle consumed={lipidValue} total={lipidTarget} color="#10B981" /> {/* Emerald-500 for Lipids */}
+                <Circle consumed={lipidValue} total={lipidTarget} color="#93c5fd" /> {/* Emerald-500 for Lipids */}
                 <p className="text-center text-xs text-neutral-500">Lipide</p>
             </div>
             <div className="flex flex-col ">
-                <Circle consumed={carbohydrateValue} total={carbohydrateTarget} color="#3B82F6" /> {/* Blue-500 for Carbohydrates */}
+                <Circle consumed={carbohydrateValue} total={carbohydrateTarget} color="#93c5fd" /> {/* Blue-500 for Carbohydrates */}
                 <p className="text-center text-xs text-neutral-500">Carbs</p>
             </div>
         </div>

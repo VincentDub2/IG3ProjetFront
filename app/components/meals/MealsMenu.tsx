@@ -24,7 +24,9 @@ const MealsMenu : React.FC<MealsMenuProps> = ({meals}) => {
         lg:grid-cols-2
         xl:grid-cols-2
         2xl:grid-cols-4
-        bg-gray-100
+        bg-gradient-to-tl
+        from-gray-200
+        to-blue-300
         shadow-sm
         rounded-lg
         p-4

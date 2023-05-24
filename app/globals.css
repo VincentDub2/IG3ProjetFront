@@ -34,3 +34,12 @@ body,
     font-size: 16px !important;
     width: 100% !important;
 }
+
+.flip-card {
+    perspective: 1000px;
+}
+
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+}

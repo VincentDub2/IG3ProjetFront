@@ -1,15 +1,18 @@
 'use client'
+
+//page.tsx
+
 import Container from "@/app/components/Container";
 import ClientOnly from "./components/ClientOnly";
 import MealsMenu from "@/app/components/meals/MealsMenu";
 import CircleNutrients from "@/app/components/CircleNutrients/CircleNutrients";
 import NutritionAdvice from "@/app/components/Advice/NutritionAdvice";
 import useMeal from "@/app/hooks/useMeal";
-import {MealType} from "@/app/types";
 import {useSession} from "next-auth/react";
 import {useEffect, useState} from "react";
 
 import useEditFoodModal from '@/app/hooks/useEditFoodModal';
+import Carousel from "@/app/components/FlipCard/Carousel";
 
 const Home  =()  => {
 
@@ -50,20 +53,38 @@ const Home  =()  => {
             pt-12
             grid
             grid-cols-1
-            sm:grid-cols-2
+            sm:grid-cols-1
             md:grid-cols-3
             lg:grid-cols-4
             xl:grid-cols-4
             2xl:grid-cols-5
             gap-9
           ">
-                <div className="md:col-span-2 xl:col-span-2">
-                    <MealsMenu meals={foods}/>
-                </div>
-                    <div className="">
+                    <div className="
+                    md:col-span-2
+                    xl:col-span-2
+                    h-full
+                    lg:pl-14
+                    ">
+                        <MealsMenu meals={foods}/>
+                    </div>
+
+                    <div className="
+                    md:col-span-1
+                    lg:col-span-2
+                    lg:w-2/4
+                    lg:h-2/4
+                    md:w-full
+                    md:h-full
+                    sm:w-2/4
+                    sm:mx-auto
+                    sm:h-2/4
+                    justify-center
+                    flex
+                    ">
                         <CircleNutrients
                             consumed={totalCalories} total={session?.user.dailyCalories ? session?.user.dailyCalories : 2700}
-                           proteinTarget={session?.user.dailyProtein ? session?.user.dailyProtein : 100}
+                            proteinTarget={session?.user.dailyProtein ? session?.user.dailyProtein : 100}
                             proteinValue={totalProtein}
                             carbohydrateTarget={session?.user.dailyCarbs ? session?.user.dailyCarbs : 100}
                             carbohydrateValue={totalCarbohydrates}
@@ -71,12 +92,25 @@ const Home  =()  => {
                             lipidValue={totalLipids}
                         />
                     </div>
-                    <div className="">
-                        <NutritionAdvice />
+                    <div className="
+                    col-span-full
+                    xl:pr-24
+                    xl:pl-24
+                    lg:pr-24
+                    lg:pl-24
+                    lg:pt-14
+                    2xl:pr-24
+                    2xl:pl-24
+                    rounded-md
+                    h-full
+                    border-rose-500
+                    sm:pt-10
+                    ">
+                        <Carousel />
                     </div>
                 </div>
             </Container>
         </ClientOnly>
-    )
+    );
 }
 export default Home;

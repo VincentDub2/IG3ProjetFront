@@ -1,4 +1,4 @@
-import NextAuth, {AuthOptions, Profile} from "next-auth"
+import NextAuth, {AuthOptions, Profile, User} from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 import GithubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
@@ -7,6 +7,12 @@ import type { NextAuthOptions } from 'next-auth'
 import axios from "axios";
 import provider from "@/app/providers/Provider";
 import Cookies from "js-cookie";
+import {session} from "next-auth/core/routes";
+
+
+interface CustomUser extends User {
+  sessionToken?: string
+}
 
 export const authOptions : NextAuthOptions = {
   session: {
@@ -61,26 +67,39 @@ export const authOptions : NextAuthOptions = {
       session.user=token as any;
       return session;
   },
-  async signIn({user, account, profile}) {
+    async signIn({user, account, profile}) {
       if (account?.provider === 'github' || account?.provider === 'google') {
         if (!account || !profile) {
-            return false
+          return false;
         }
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/socialLog`, {
-          id: account.userId,
-          name: profile.name,
-          email: profile.email,
-          image: profile.image,
-          accessToken: account.accessToken,
-          refreshToken: account.refreshToken,
-          provider: account.provider
-        });
-        // Vérifier la réponse du serveur ou effectuer d'autres actions nécessaires
-        console.log(response.data);
-        return true;
+        const customUser = user as CustomUser;
+        try {
+          const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/socialLog`, {
+            id: user.id,
+            providerId: account.providerAccountId,
+            name: profile.name,
+            email: profile.email,
+            image: profile.image,
+            accessToken: account.access_token,
+            refreshToken: account.refresh_token,
+            provider: account.provider
+          });
+
+          if (response.data.account.access_token) {
+            customUser.sessionToken = response.data.account.access_token;
+            customUser.id=response.data.user.userId;
+          }
+          user.id=response.data.user.id;
+          user.name=response.data.user.name;
+          return true;
+
+        } catch (err) {
+          console.error("Erreur lors de l'authentification sociale:", err);
+          return false;
+        }
       }
-      return true;
-  },
+      return false;  // Ajoutez cette ligne
+    },
 },
   debug: process.env.NODE_ENV === 'development',
 }
