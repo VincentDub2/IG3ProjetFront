@@ -98,7 +98,7 @@ export const authOptions : NextAuthOptions = {
           return false;
         }
       }
-      return false;  // Ajoutez cette ligne
+      return true;  // Ajoutez cette ligne
     },
 },
   debug: process.env.NODE_ENV === 'development',
