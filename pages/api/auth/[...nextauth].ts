@@ -34,8 +34,17 @@ export const authOptions : NextAuthOptions = {
     }}),
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string
-    }),
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      async profile(profile, tokens) {
+        return {
+           id: profile.id,
+          name: profile.name,
+          email: profile.email,
+          image: profile.picture,
+          accessToken: tokens.access_token,
+          refreshToken: tokens.refresh_token,
+        }
+      }}),
     CredentialsProvider({
       name: 'credentials',
       credentials: {
@@ -80,6 +89,8 @@ export const authOptions : NextAuthOptions = {
             refreshToken: account.refresh_token,
             provider: account.provider
           });
+
+
 
           if (response.status === 200) {
               return true;
