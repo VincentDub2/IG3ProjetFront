@@ -81,13 +81,6 @@ export const authOptions : NextAuthOptions = {
             provider: account.provider
           });
 
-          if (response.data.account.access_token) {
-            customUser.sessionToken = response.data.account.access_token;
-            customUser.id=response.data.user.userId;
-          }
-          user.id=response.data.user.id;
-          user.name=response.data.user.name;
-
           if (response.status === 200) {
               return true;
           }
