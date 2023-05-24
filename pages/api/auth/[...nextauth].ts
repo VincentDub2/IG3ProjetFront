@@ -12,6 +12,8 @@ import {session} from "next-auth/core/routes";
 
 interface CustomUser extends User {
   sessionToken?: string
+  accessToken?: string
+  refreshToken?: string
 }
 
 export const authOptions : NextAuthOptions = {
@@ -34,17 +36,8 @@ export const authOptions : NextAuthOptions = {
     }}),
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-      async profile(profile, tokens) {
-        return {
-           id: profile.id,
-          name: profile.name,
-          email: profile.email,
-          image: profile.picture,
-          accessToken: tokens.access_token,
-          refreshToken: tokens.refresh_token,
-        }
-      }}),
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string
+    }),
     CredentialsProvider({
       name: 'credentials',
       credentials: {
@@ -64,8 +57,28 @@ export const authOptions : NextAuthOptions = {
     })
   ],
   callbacks: {
-    async jwt({token,user}){
-      return {...token, ...user}
+    async jwt({token,user,account,profile,isNewUser}){
+      if (user ) {
+        token.user = {
+          ...token,
+          user: {
+            ...user,
+            sessionToken: (user as any).sessionToken || account?.access_token,
+            id: (user as any).id,
+            // ajoutez d'autres propriétés si elles existent sur `user`
+          }
+        }
+      }
+
+      if (account) {
+        token.account = {
+          id: account.id,
+          provider: account.provider,
+          type: account.type,
+          // add other properties if they exist on `account`
+        }
+      }
+      return token;
     },
     async session({session, token, user}){
       session.user=token as any;
@@ -91,11 +104,13 @@ export const authOptions : NextAuthOptions = {
           });
 
 
-
           if (response.status === 200) {
-              return true;
-          }
-          else {
+            // Cast `user` as `CustomUser`
+            const customUser = user as CustomUser;
+            customUser.accessToken = response.data.access_token;
+            customUser.refreshToken = response.data.refresh_token;
+            return true;
+          } else {
             return false;
           }
 
