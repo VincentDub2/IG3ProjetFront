@@ -68,6 +68,7 @@ export const authOptions : NextAuthOptions = {
       return session;
   },
     async signIn({user, account, profile}) {
+
       if (account?.provider === 'github' || account?.provider === 'google') {
         if (!account || !profile) {
           return false;
@@ -75,7 +76,7 @@ export const authOptions : NextAuthOptions = {
         const customUser = user as CustomUser;
         try {
           const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/socialLog`, {
-            id: user.id,
+            id: account.userId,
             providerId: account.providerAccountId,
             name: profile.name,
             email: profile.email,
@@ -91,7 +92,13 @@ export const authOptions : NextAuthOptions = {
           }
           user.id=response.data.user.id;
           user.name=response.data.user.name;
-          return true;
+
+          if(response.status === 200) {
+              return true;
+          }
+          else {
+            return false;
+          }
 
         } catch (err) {
           console.error("Erreur lors de l'authentification sociale:", err);

@@ -27,7 +27,6 @@ import {Food} from "@/app/types";
 import useEditFoodModal from "@/app/hooks/useEditFoodModal";
 const MyFood = () => {
 
-    const loginModal = useLoginModal();
 
     const AddFoodModal = useAddProductModal();
 
@@ -39,16 +38,6 @@ const MyFood = () => {
     const router = useRouter();
 
     const { data: session } = useSession();
-
-    setTimeout(() => {}, 1000); // On a timer to avoid a warning
-
-    useEffect(() => {
-        if (!session) {
-            router.push('/');
-            toast("You must be logged in to view this page.");
-            loginModal.onOpen();
-        }
-    }, [session]);
 
     const userId = session?.user?.id ?? '';
     const sessionToken = session?.user?.sessionToken ?? '';

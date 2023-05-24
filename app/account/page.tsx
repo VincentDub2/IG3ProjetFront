@@ -17,18 +17,9 @@ import { useRouter } from "next/navigation";
 
 
 const Account = () => {
-    const loginModal = useLoginModal();
-    const router = useRouter();
 
     const { data: session } = useSession();
 
-    useEffect(() => {
-        if (!session) {
-            router.push('/');
-            toast("You must be logged in to view this page.");
-            loginModal.onOpen();
-        }
-    }, [session]);
 
 
     const userId = session?.user?.id ?? '';const sessionToken = session?.user?.sessionToken ?? '';

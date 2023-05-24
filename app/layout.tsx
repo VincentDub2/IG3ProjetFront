@@ -10,6 +10,7 @@ import ClientOnly from './components/ClientOnly';
 import SearchModalFood from "@/app/components/modals/SearchModalFood";
 import AddProductModal from "@/app/components/modals/AddProductModal";
 import Head from "next/head";
+import {SessionProvider} from "next-auth/react";
 
 
 
