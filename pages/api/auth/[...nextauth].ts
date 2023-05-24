@@ -59,11 +59,6 @@ export const authOptions : NextAuthOptions = {
       return {...token, ...user}
     },
     async session({session, token, user}){
-      if (!token) {
-       // session.user.sessionToken=user
-        Cookies.set('Eattrack-Auth', session.user.sessionToken);
-      }
-      Cookies.set('Eattrack-Auth', session.user.sessionToken);
       session.user=token as any;
       return session;
   },
@@ -93,7 +88,7 @@ export const authOptions : NextAuthOptions = {
           user.id=response.data.user.id;
           user.name=response.data.user.name;
 
-          if(response.status === 200) {
+          if (response.status === 200) {
               return true;
           }
           else {
