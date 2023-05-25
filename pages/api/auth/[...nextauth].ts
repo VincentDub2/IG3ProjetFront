@@ -5,10 +5,8 @@ import GoogleProvider from "next-auth/providers/google"
 import type { NextAuthOptions } from 'next-auth'
 
 import axios from "axios";
-import provider from "@/app/providers/Provider";
-import Cookies from "js-cookie";
-import {session} from "next-auth/core/routes";
-
+import {PrismaAdapter} from "@next-auth/prisma-adapter";
+import prisma from "@/app/libs/prismadb"
 
 interface CustomUser extends User {
   sessionToken?: string
@@ -16,24 +14,15 @@ interface CustomUser extends User {
   refreshToken?: string
 }
 
+
+
 export const authOptions : NextAuthOptions = {
-  session: {
-    strategy: 'jwt',
-  },secret: process.env.NEXTAUTH_SECRET,
+  adapter: PrismaAdapter(prisma),
   providers: [
     GithubProvider({
       clientId: process.env.GITHUB_ID as string,
-      clientSecret: process.env.GITHUB_SECRET as string,
-      async profile(profile, tokens) {
-        return {
-          id: profile.id,
-          name: profile.name,
-          email: profile.email,
-          image: profile.picture,
-          accessToken: tokens.access_token,
-          refreshToken: tokens.refresh_token,
-        }
-    }}),
+      clientSecret: process.env.GITHUB_SECRET as string
+    }),
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string
@@ -57,16 +46,14 @@ export const authOptions : NextAuthOptions = {
     })
   ],
   callbacks: {
-    async jwt({token,user,account,profile,isNewUser}){
-      if (user ) {
+    async jwt({token, user, account, profile, isNewUser}) {
+      if (user) {
         token.user = {
           ...token,
-          user: {
-            ...user,
-            sessionToken: (user as any).sessionToken || account?.access_token,
-            id: (user as any).id,
-            // ajoutez d'autres propriétés si elles existent sur `user`
-          }
+          ...user,
+          sessionToken: (user as any).sessionToken || account?.access_token,
+          id: user.id,
+          // ajoutez d'autres propriétés si elles existent sur `user`
         }
       }
 
@@ -78,51 +65,25 @@ export const authOptions : NextAuthOptions = {
           // add other properties if they exist on `account`
         }
       }
+      console.log("token", token);
       return token;
     },
-    async session({session, token, user}){
-      session.user=token as any;
-      return session;
-  },
-    async signIn({user, account, profile}) {
-
-      if (account?.provider === 'github' || account?.provider === 'google') {
-        if (!account || !profile) {
-          return false;
-        }
-        const customUser = user as CustomUser;
-        try {
-          const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/socialLog`, {
-            id: account.userId,
-            providerId: account.providerAccountId,
-            name: profile.name,
-            email: profile.email,
-            image: profile.image,
-            accessToken: account.access_token,
-            refreshToken: account.refresh_token,
-            provider: account.provider
-          });
-
-
-          if (response.status === 200) {
-            // Cast `user` as `CustomUser`
-            const customUser = user as CustomUser;
-            customUser.accessToken = response.data.access_token;
-            customUser.refreshToken = response.data.refresh_token;
-            return true;
-          } else {
-            return false;
-          }
-
-        } catch (err) {
-          console.error("Erreur lors de l'authentification sociale:", err);
-          return false;
-        }
+    async session({session, token, user}) {
+      session.user = {
+        ...session.user,
+        sessionToken: (token as any).user.sessionToken,
+        id: (token as any).user.id,
       }
-      return true;  // Ajoutez cette ligne
+      console.log("session", session);
+      return session;
     },
-},
-  debug: process.env.NODE_ENV === 'development',
+  }, debug: process.env.NODE_ENV === 'development',
+    pages: {
+      signIn: '/',
+    },
+    session: {
+  strategy: "jwt",
+}, secret: process.env.NEXTAUTH_SECRET,
 }
 
 export default NextAuth(authOptions);

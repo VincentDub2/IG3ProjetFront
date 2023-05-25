@@ -1,6 +1,8 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
+// schema.prisma
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -37,10 +39,13 @@ enum ActivityLevel {
 }
 
 model User {
-  id                String         @id @default(uuid()) @map("_id")
-  email             String         @unique
-  emailVerified     DateTime?
-  name              String?
+  id            String    @id @default(uuid()) @map("_id")
+  email         String    @unique
+  emailVerified DateTime?
+  name          String?
+  salt          String?
+  sessionToken  String?   @unique
+
   image             String?
   weight            Int?
   size              Int?
@@ -73,7 +78,7 @@ model Account {
   provider          String
   providerAccountId String
   refresh_token     String?
-  access_token      String?
+  access_token      String? @unique
   expires_at        Int?
   token_type        String?
   scope             String?
@@ -85,19 +90,23 @@ model Account {
 }
 
 model Food {
-  id           String       @id @default(uuid()) @map("_id")
-  name         String
-  barcode      String?
-  createdAt    DateTime     @default(now())
-  updatedAt    DateTime     @updatedAt
-  user         User?        @relation(fields: [userId], references: [id], onDelete: SetNull)
+  id        String   @id @default(uuid()) @map("_id")
+  name      String
+  barcode   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  brandId String?
+
   userId       String?
-  calories     Int
-  protein      Int
-  fat          Int
-  carbs        Int
-  fiber        Int?
-  salt         Int?
+  calories     Float
+  protein      Float
+  fat          Float
+  carbs        Float
+  sugar        Float?
+  fiber        Float?
+  salt         Float?
   servingSize  Int          @default(100) // En g or ml par defaut 100
   vitamins     String?
   minerals     String?
@@ -105,26 +114,47 @@ model Food {
   foodCategory String?
   approved     Boolean      @default(false)
   userFavori   UserFavori[]
-  meal         Meal[]
+  mealFood     MealFood[]
+
+  brand Brand? @relation(fields: [brandId], references: [id], onDelete: SetNull)
+}
+
+model Brand {
+  id        String   @id @default(uuid()) @map("_id")
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  food      Food[]
 }
 
 model UserFavori {
   id      String @id @default(uuid()) @map("_id")
   user_id String
   food_id String
-  user    User   @relation(fields: [user_id], references: [id])
-  food    Food   @relation(fields: [food_id], references: [id])
+  user    User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  food    Food   @relation(fields: [food_id], references: [id], onDelete: Cascade)
 
   @@unique([user_id, food_id])
 }
 
 // Meal is a table that contains the meals of the day. It is linked to the User table by the user_id field. It is also linked to the MealFood table by the id field.
 model Meal {
-  id        String   @id @default(uuid()) @map("_id")
+  id        String     @id @default(uuid()) @map("_id")
   user_id   String
   meal_type MealType
-  user      User     @relation(fields: [user_id], references: [id])
-  food      Food     @relation(fields: [food_id], references: [id])
-  food_id   String
-  createdAt DateTime @default(now())
+  user      User       @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  mealFood  MealFood[]
+
+  @@unique([user_id, meal_type, createdAt])
+}
+
+model MealFood {
+  id       String @id @default(uuid()) @map("_id")
+  quantity Int
+  foodId   String
+  mealId   String
+  food     Food   @relation(fields: [foodId], references: [id], onDelete: Cascade)
+  meal     Meal   @relation(fields: [mealId], references: [id], onDelete: Cascade)
 }
