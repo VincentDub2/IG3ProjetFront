@@ -11,6 +11,8 @@ import SearchModalFood from "@/app/components/modals/SearchModalFood";
 import AddProductModal from "@/app/components/modals/AddProductModal";
 import Head from "next/head";
 import {SessionProvider} from "next-auth/react";
+import {authOptions} from "@/pages/api/auth/[...nextauth]";
+import {getServerSession} from "next-auth";
 
 
 
@@ -23,33 +25,34 @@ const font = Nunito({
   subsets: ['latin'], 
 });
 
-export default async function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+interface IpProps {
+    children: React.ReactNode;
+}
+
+export default async function RootLayout ({
+  children} :IpProps ) {
 
   return (
     <html lang="en">
         <Head>
                 <link rel="icon" href="./WebSiteIcon.png" sizes="any" />
         </Head>
-
-      <body className={font.className}>
-        <Provider>
-        <ClientOnly>
-          <ToasterProvider />
-          <SearchModalFood/>
-          <LoginModal />
-          <RegisterModal />
-          <AddProductModal />
-          <Navbar />
-        </ClientOnly>
-        <div className="pb-36 pt-16">
-          {children}
-        </div>
-        </Provider>
-      </body>
+          <body className={font.className}>
+            <Provider>
+            <ClientOnly>
+              <ToasterProvider />
+              <SearchModalFood/>
+              <LoginModal />
+              <RegisterModal />
+              <AddProductModal />
+              <Navbar />
+            </ClientOnly>
+            <div className="pb-36 pt-16">
+              {children}
+            </div>
+            </Provider>
+          </body>
     </html>
   )
 }
+

@@ -14,19 +14,35 @@ interface CustomUser extends User {
   refreshToken?: string
 }
 
+interface TokenData {
+  user?: {
+    sessionToken?: string;
+    id?: string;
+    // Autres propriétés si nécessaires
+  };
+  account?: {
+    id?: string;
+    provider?: string;
+    type?: string;
+    accessToken?: string;
+    sessionToken?: string;
+    // Autres propriétés si nécessaires
+  };
+  // Autres propriétés si nécessaires
+}
+
+interface SessionData {
+  user?: {
+    sessionToken?: string;
+    id?: string;
+    // Autres propriétés si nécessaires
+  };
+  // Autres propriétés si nécessaires
+}
 
 
 export const authOptions : NextAuthOptions = {
-  adapter: PrismaAdapter(prisma),
   providers: [
-    GithubProvider({
-      clientId: process.env.GITHUB_ID as string,
-      clientSecret: process.env.GITHUB_SECRET as string
-    }),
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string
-    }),
     CredentialsProvider({
       name: 'credentials',
       credentials: {
@@ -46,43 +62,22 @@ export const authOptions : NextAuthOptions = {
     })
   ],
   callbacks: {
-    async jwt({token, user, account, profile, isNewUser}) {
-      if (user) {
-        token.user = {
-          ...token,
-          ...user,
-          sessionToken: (user as any).sessionToken || account?.access_token,
-          id: user.id,
-          // ajoutez d'autres propriétés si elles existent sur `user`
-        }
-      }
+      async jwt({ token, user }) {
+        return { ...token, ...user };
+      },
+      async session({ session, token, user }) {
+        // Send properties to the client, like an access_token from a provider.
+        session.user = token as any;
 
-      if (account) {
-        token.account = {
-          id: account.id,
-          provider: account.provider,
-          type: account.type,
-          // add other properties if they exist on `account`
-        }
-      }
-      console.log("token", token);
-      return token;
-    },
-    async session({session, token, user}) {
-      session.user = {
-        ...session.user,
-        sessionToken: (token as any).user.sessionToken,
-        id: (token as any).user.id,
-      }
-      console.log("session", session);
-      return session;
-    },
+        return session;
+      },
   }, debug: process.env.NODE_ENV === 'development',
     pages: {
       signIn: '/',
     },
     session: {
   strategy: "jwt",
+      maxAge: 3000,
 }, secret: process.env.NEXTAUTH_SECRET,
 }
 
