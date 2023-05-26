@@ -7,7 +7,9 @@ const useEditFoodModal = () => {
     const [currentFood, setCurrentFood] = useState<Food | undefined>(undefined);
 
     const onOpen = useCallback((food: Food) => {
+        console.log("Food in modal", food);
         setCurrentFood(food);
+        console.log("Current food in modal", currentFood)
         setIsOpen(true);
     }, []);
 

@@ -25,6 +25,8 @@ const EditFoodModal : React.FC<EditFoodModalProps> = ({isOpen, onClose, food, up
         }
     }
 
+    console.log("food",updatedFood);
+
     const handleUpdateFood = async () => {
         if (!food || !updatedFood) {
             return null;

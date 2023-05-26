@@ -57,6 +57,11 @@ const MyFood = () => {
         };
     }, [getAllFoodFromThisUser]);
 
+    const handleEdit = (food : Food) => {
+        editFoodModal.onOpen(food);
+    };
+
+
 
     return (
             <ChakraProvider>
@@ -86,9 +91,9 @@ const MyFood = () => {
                         </Heading>
 
                         {foods.length === 0 ? (
-                            <Text color="gray.500">You have no foods yet...</Text>
+                            <Text color="gray.500">You have no foods yet ...</Text>
                         ) : (
-                            <FoodList foods={foods} handleRemove={deleteFood} handleEdit={()=> {}}/>
+                            <FoodList foods={foods} handleRemove={deleteFood} handleEdit={handleEdit}/>
                         )}
                         <div className="pt-14">
                             <Button label="Add a food" onClick={onTogle}/>

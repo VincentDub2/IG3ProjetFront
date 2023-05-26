@@ -17,6 +17,7 @@ const Search = () => {
     register,
         handleSubmit,
         formState: { errors },
+      reset,
   } = useForm<SearchFormData>();
 
 
@@ -34,6 +35,8 @@ const Search = () => {
     }, { skipNull: true });
     router.push(url);
     searchModal.onOpen();
+    reset();
+
   };
 
   return ( 

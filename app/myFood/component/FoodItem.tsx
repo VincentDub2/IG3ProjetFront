@@ -5,7 +5,7 @@ import { Food } from '@/app/types';
 interface FoodItemProps {
     food: Food;
     handleRemove?: (foodId: string) => void;  // Function to handle food removal
-    handleEdit?: (food: Food) => void;  // Function to handle food editing
+    handleEdit? : (food: Food) => void;  // Function to handle food editing
 }
 
 const FoodItem: React.FC<FoodItemProps> = ({ food, handleRemove, handleEdit }) => {

@@ -2,11 +2,12 @@
 import { Box, Stack } from '@chakra-ui/react';
 import FoodItem from "@/app/myFood/component/FoodItem";
 import { Food } from "@/app/types";
+import {promises} from "dns";
 
 interface FoodListProps {
     foods: Food[];
     handleRemove?: (foodId: string) => void;  // Function to handle food removal
-    handleEdit?: (food: Food) => void;  // Function to handle food editing
+    handleEdit?: (food : Food) => void;  // Function to handle food editing
 }
 
 const FoodList : React.FC<FoodListProps> = ({ foods ,handleEdit,handleRemove}) => (
