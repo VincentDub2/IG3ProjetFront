@@ -17,7 +17,7 @@ const BrandSelect: React.FC<BrandSelectProps> = ({ value, onChange }) => {
     const brands = getAll();
 
     const formatOptionLabel = (option: BrandSelectValue) => (
-        <div className="flex flex-row items-center gap-3">
+        <div className="flex flex-row items-center gap-3 z-10 opacity-80">
             <div>{option.name}</div>
         </div>
     );
@@ -31,6 +31,11 @@ const BrandSelect: React.FC<BrandSelectProps> = ({ value, onChange }) => {
             ...provided,
             color: state.isSelected ? 'pink' : 'black',
             backgroundColor: state.isSelected ? 'white' : 'white',
+            backdropOpacity : 1,
+        }),
+        menu: (provided: CSSObject) => ({
+            ...provided,
+            zIndex: 20
         }),
         // autres styles personnalisés ici...
     }
