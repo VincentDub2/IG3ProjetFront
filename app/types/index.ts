@@ -95,3 +95,21 @@ export type MealFoodPost = {
     date : string,
 }
 
+export enum Gender {
+    male= "male",
+female = "female"
+}
+
+export enum GoalType {
+    lose_weight="lose_weight",
+gain_weight="gain_weight",
+maintain_weight="maintain_weight"
+}
+
+export enum ActivityLevel {
+    sedentary="sedentary",
+lightly_active="lightly_active",
+moderately_active="moderately_active",
+very_active="very_active",
+extra_active="extra_active"
+}

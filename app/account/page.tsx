@@ -10,7 +10,8 @@ import ClientOnly from "@/app/components/ClientOnly";
 import {useEffect, useState} from "react";
 import Select from "@/app/account/component/Select";
 import sanitizeUserInput from "@/app/service/sanatizeUserInput";
-
+import {calculateEnergyNeeds} from "@/app/service/calculateInputEnergie";
+import Button from "@/app/components/Button";
 import useLoginModal from "@/app/hooks/useLoginModal";
 
 import { useRouter } from "next/navigation";
@@ -34,15 +35,28 @@ const Account = () => {
         register,
         handleSubmit,
         formState: {errors},
-        setValue
+        setValue,
+        control,
+        watch,
     } = useForm<FieldValues>();
 
     useEffect(() => {
         if (user) {
-            setValue("name", user.name);
-            setValue("email", user.email);
-            setValue("size", user.size);
-            setValue("weight", user.weight);
+            setValue("name", user.name || '');
+            setValue("email", user.email || '');
+            setValue("size", user.size || '');
+            setValue("weight", user.weight || '');
+            setValue("age", user.age || '');
+            setValue("gender",user.gender || '');
+            setValue("activityLevel",user.activityLevel || '');
+            setValue("targetWeight",user.targetWeight || '');
+            setValue("targetDate",user.percentageProtein || '');
+            setValue("percentageProtein",user.percentageProtein || '');
+            setValue("percentageCarbs",user.percentageCarbs || '');
+            setValue("percentageFat",user.percentageFat || '');
+            setValue("dailyCalories",user.dailyCalories || '');
+
+
         }
     }, [user, setValue]);
 
@@ -63,6 +77,42 @@ const Account = () => {
         }
     }
 
+    const onClickCalcule = () => {
+        const formValues = watch();
+        const user : User = {
+            name: formValues.name,
+            email: formValues.email,
+            size: formValues.size,
+            weight: formValues.weight,
+            age: formValues.age,
+            id: userId,
+            image: '',
+            activityLevel: formValues.activityLevel,
+            hashedPassword: '',
+            emailVerified: '',
+            createdAt: '',
+            updatedAt: '',
+            gender : formValues.gender,
+            targetWeight : formValues.targetWeight,
+           goalType : formValues.goalType,
+            dailyCalories : formValues.dailyCalories,
+            percentageProtein : formValues.percentageProtein,
+            dailyCarbs : formValues.dailyCarbs,
+            percentageCarbs : formValues.percentageCarbs,
+            dailyFat : formValues.dailyFat,
+            percentageFat : formValues.percentageFat,
+            dailyProtein : formValues.dailyProtein,
+        };
+        const energyNeeds = calculateEnergyNeeds(user);
+        if (energyNeeds === 0) {
+            toast.error("Somme values are missing.");
+            return;
+        }
+        toast.success("Your daily calories are calculated. You can now save your profile.");
+
+        //On transforme les valeurs en entier
+        setValue("dailyCalories",Math.round(energyNeeds));
+    }
     return (
         <ClientOnly>
             <div className=" relative h-auto sm:pl-[60px] sm:pr-[60px] bg-gray-100 py-6 flex flex-col justify-center sm:py-12 overflow-hidden">
@@ -81,6 +131,8 @@ const Account = () => {
                 disabled={false}
                 register={register}
                 errors={errors}
+                control={control}
+                watch={watch}
             />
             <InputAccount
                 id="email"
@@ -88,6 +140,8 @@ const Account = () => {
                 disabled={false}
                 register={register}
                 errors={errors}
+                control={control}
+                watch={watch}
             />
             <InputAccount
                 id="age"
@@ -96,6 +150,8 @@ const Account = () => {
                 type="number"
                 register={register}
                 errors={errors}
+                control={control}
+                watch={watch}
             />
             <Select
                 id="gender"
@@ -103,6 +159,8 @@ const Account = () => {
                 options={["male","female"]}
                 register={register}
                 errors={errors}
+                defaultValue={user?.gender || ''}
+                control={control}
             />
             <InputAccount
                 id="weight"
@@ -111,6 +169,16 @@ const Account = () => {
                 disabled={false}
                 register={register}
                 errors={errors}
+                control={control}
+                watch={watch}
+            />
+            <InputAccount
+                id={"targetWeight"}
+                label={"Target Weight"}
+                register={register}
+                errors={errors}
+                control={control}
+                watch={watch}
             />
             <InputAccount
                 id="size"
@@ -118,6 +186,8 @@ const Account = () => {
                 disabled={false}
                 register={register}
                 errors={errors}
+                control={control}
+                watch={watch}
             />
             <Select
                 id="goal"
@@ -125,6 +195,8 @@ const Account = () => {
                 options={["lose_weight", "gain_weight", "maintain_weight"]}
                 register={register}
                 errors={errors}
+                defaultValue={user?.goalType || ''}
+                control={control}
             />
             <Select
                 id="activityLevel"
@@ -132,6 +204,8 @@ const Account = () => {
                 options={["sedentary", "lightly_active", "moderately_active", "very_active", "extra_active"]}
                 register={register}
                 errors={errors}
+                defaultValue={user?.activityLevel || ''}
+                control={control}
             />
             <InputAccount
                 id="targetWeight"
@@ -140,7 +214,18 @@ const Account = () => {
                 disabled={false}
                 register={register}
                 errors={errors}
+                control={control}
+                watch={watch}
             />
+            <InputAccount
+                id={"dailyCalories"}
+                label={"daily calories"}
+                register={register}
+                errors={errors}
+                control={control}
+                watch={watch}
+            />
+
             <InputAccount
                 id="percentageFat"
                 label="percentage lipide"
@@ -148,6 +233,8 @@ const Account = () => {
                 disabled={false}
                 register={register}
                 errors={errors}
+                control={control}
+                watch={watch}
             />
             <InputAccount
                 id="percentageProtein"
@@ -156,6 +243,8 @@ const Account = () => {
                 disabled={false}
                 register={register}
                 errors={errors}
+                control={control}
+                watch={watch}
             />
             <InputAccount
                 id="percentageCarbs"
@@ -164,10 +253,16 @@ const Account = () => {
                 disabled={false}
                 register={register}
                 errors={errors}
+                control={control}
+                watch={watch}
             />
 
-            {/* Add more inputs as needed... */}
-            <button type="submit" className="btn btn-primary hover:text-rose-500">Update Account</button>
+            <div className="flex flex-row space-x-4">
+                <Button label={"Update"} onClick={()=>onSubmit}/>
+
+                <Button label={"Calcule"} type={"button"} onClick={()=>onClickCalcule()} outline={true}/>
+            </div>
+
         </form>
                             </div>
                         </div>

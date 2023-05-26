@@ -13,6 +13,8 @@ import {useEffect, useState} from "react";
 
 import useEditFoodModal from '@/app/hooks/useEditFoodModal';
 import Carousel from "@/app/components/FlipCard/Carousel";
+import useUser from "@/app/hooks/useUser";
+import {number} from "prop-types";
 
 const Home  =()  => {
 
@@ -31,6 +33,8 @@ const Home  =()  => {
         getAllMealFoods
     } = useMeal(userId, sessionToken);
 
+    const {user, updateUser, error} = useUser(userId, sessionToken);
+
     useEffect(() => {
         const updateFoods = () => {
             getAllMealFoods();
@@ -43,6 +47,29 @@ const Home  =()  => {
             window.removeEventListener('mealUpdated', updateFoods);
         };
     }, [getAllMealFoods]);
+
+    console.log(session?.user);
+
+    const daylyLipidGram = ()=> {
+        if (user?.dailyCalories && user?.percentageFat) {
+            return Number((user?.dailyCalories*user?.percentageFat/9/100).toFixed(0));
+        }
+        return 40
+    }
+    const daylyProteinGram = ()=> {
+        if (user?.dailyCalories && user?.percentageProtein) {
+            return Number((user?.dailyCalories*user?.percentageProtein/4/100).toFixed(0));
+        }
+        return 120;
+    }
+    console.log(daylyLipidGram())
+
+    const daylyCarbohydratesGram = ()=> {
+        if (user?.dailyCalories && user?.percentageCarbs) {
+            return Number((user?.dailyCalories*user?.percentageCarbs/4/100).toFixed(0));
+        }
+        return 150;
+    }
 
 
     return (
@@ -83,13 +110,13 @@ const Home  =()  => {
                     flex
                     ">
                         <CircleNutrients
-                            consumed={totalCalories} total={session?.user.dailyCalories ? session?.user.dailyCalories : 2700}
-                            proteinTarget={session?.user.dailyProtein ? session?.user.dailyProtein : 100}
-                            proteinValue={totalProtein}
-                            carbohydrateTarget={session?.user.dailyCarbs ? session?.user.dailyCarbs : 100}
-                            carbohydrateValue={totalCarbohydrates}
-                            lipidTarget={session?.user.dailyFat ? session?.user.dailyFat : 100}
-                            lipidValue={totalLipids}
+                            consumed={totalCalories} total={user?.dailyCalories || 2700}
+                            proteinTarget={daylyProteinGram()}
+                            proteinValue={Number((totalProtein/4).toFixed(0))}
+                            carbohydrateTarget={daylyCarbohydratesGram()}
+                            carbohydrateValue={Number((totalCarbohydrates/4).toFixed(0))}
+                            lipidTarget={daylyLipidGram()}
+                            lipidValue={Number((totalLipids/9).toFixed(0))}
                         />
                     </div>
                     <div className="

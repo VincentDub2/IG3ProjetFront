@@ -1,6 +1,6 @@
 'use client'
-import React, { useState } from "react";
-import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
+import React, {useEffect, useState} from "react";
+import {Control, FieldErrors, FieldValues, UseFormRegister, UseFormWatch, useWatch} from "react-hook-form";
 
 interface InputProps {
     id: string;
@@ -9,6 +9,8 @@ interface InputProps {
     disabled?: boolean;
     register: UseFormRegister<FieldValues>;
     errors: FieldErrors;
+    control: Control<FieldValues>;
+    watch: UseFormWatch<FieldValues>;
 }
 
 const InputAccount: React.FC<InputProps> = ({
@@ -18,9 +20,28 @@ const InputAccount: React.FC<InputProps> = ({
                                                 disabled,
                                                 register,
                                                 errors,
+                                            control,
+                                                watch,
+
                                             }) => {
+
+    // Regarder la valeur du champ.
+    const watchValue = useWatch({
+        control,
+        name: id,
+    });
+
     const [isFocused, setFocus] = useState(false);
     const [hasValue, setValue] = useState(false);
+
+    const fieldValue = watch(id);
+
+    useEffect(() => {
+        setValue(fieldValue !== undefined && fieldValue !== "");
+    }, [fieldValue]);
+
+
+
 
     const handleFocus = () => {
         setFocus(true);

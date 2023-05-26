@@ -50,6 +50,8 @@ const BrandSelect: React.FC<BrandSelectProps> = ({ value, onChange }) => {
             ...provided,
             color: state.isSelected ? 'pink' : 'black',
             backgroundColor: state.isSelected ? 'white' : 'white',
+            borderColor: state.isFocused ? 'black' : 'transparent', // Ajoutez cette ligne pour changer la couleur de la bordure lors du survol.
+            borderWidth: state.isFocused ? '1px' : '0px',
             backdropOpacity: 1,
         }),
         menu: (provided: CSSObject) => ({

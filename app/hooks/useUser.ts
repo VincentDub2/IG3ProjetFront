@@ -51,6 +51,7 @@ const useUser = (userId: string, sessionToken: string): UseUserResponse => {
                 return;
 
             }
+            console.log("Response", response.data);
 
             setUser(response.data);
             setError(null);

@@ -16,7 +16,7 @@ const ListFood: React.FC<ListFoodProps> = ({ foods }) => {
                             {item.quantity} g
                         </div>
                         <div>
-                             {item.quantity * item.calories} kcal
+                             {item.quantity * item.calories/100} kcal
                         </div>
                     </div>
                     <hr className="border-gray-200 mt-2"/>
