@@ -2,6 +2,7 @@
 
 
 import React, { useEffect, useState } from 'react';
+import theme from "@/theme";
 
 import FoodList from './component/FoodList';
 import useLoginModal from "@/app/hooks/useLoginModal";
@@ -25,6 +26,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import EditFoodModal from "@/app/myFood/component/EditFoodModal";
 import {Food} from "@/app/types";
 import useEditFoodModal from "@/app/hooks/useEditFoodModal";
+import {th} from "date-fns/locale";
 const MyFood = () => {
 
 
@@ -64,7 +66,7 @@ const MyFood = () => {
 
 
     return (
-            <ChakraProvider>
+            <ChakraProvider theme={theme}>
                 <EditFoodModal
                     isOpen={editFoodModal.isOpen}
                     food={editFoodModal.currentFood}

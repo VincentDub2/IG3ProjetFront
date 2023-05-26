@@ -18,8 +18,8 @@ const FoodItem: React.FC<FoodItemProps> = ({ food, handleRemove, handleEdit }) =
                     {/* Add more information about the food as needed */}
                 </Box>
                 <Box>
-                    <Button colorScheme="red" mr={2} onClick={() => handleEdit && handleEdit(food)}>Edit</Button>
-                    <Button colorScheme="red" onClick={() => handleRemove && handleRemove(food.id)}>Remove</Button>
+                    <Button bgColor="rose500" colorScheme="rose500" mr={2} onClick={() => handleEdit && handleEdit(food)}>Edit</Button>
+                    <Button  bgColor="rose500" colorScheme="rose500"  onClick={() => handleRemove && handleRemove(food.id)}>Remove</Button>
                 </Box>
             </Flex>
         </Box>
