@@ -24,7 +24,7 @@ const FlipCard: React.FC<FlipCardProps> = ({ image, title, description, recipe, 
 
     return (
         <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
-            <div onClick={handleClick} className="w-64 h-full bg-white rounded-lg shadow-xl overflow-hidden cursor-pointer">
+            <div onClick={handleClick} className="w-64 h-96 bg-white rounded-lg shadow-xl overflow-hidden cursor-pointer">
             <div className="relative w-full h-48">
                 <Image
                     src={image || '/images/placeholder.jpg'}
@@ -40,10 +40,10 @@ const FlipCard: React.FC<FlipCardProps> = ({ image, title, description, recipe, 
                 </div>
             </div>
 
-            <div onClick={handleClick} className="w-64 h-full bg-white rounded-lg shadow-xl p-6 flex flex-col justify-between">
+            <div onClick={handleClick} className="w-64 h-96 bg-white rounded-lg shadow-xl p-6 flex flex-col justify-between">
                 <div>
                     <h2 className="text-2xl font-bold mb-2">Recette</h2>
-                    <p>{recipe}</p>
+                    <p>{description}</p>
                 </div>
                 <div>
                     <h2 className="text-xl font-bold mb-2">Information Nutritionnelle</h2>

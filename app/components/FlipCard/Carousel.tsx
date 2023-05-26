@@ -17,7 +17,7 @@ const Carousel: React.FC = () => {
             image: "https://images.unsplash.com/photo-1505935428862-770b6f24f629",
             title: "Grilled Chicken and Vegetables",
             description: "Grilled chicken served with a selection of seasonal vegetables.",
-            recipe: "Recipe 3",
+            recipe: "Chicken, Zucchini, Bell Pepper, Olive Oil",
             protein: 35, // in grams
             carbohydrates: 30, // in grams
             fats: 15, // in grams
