@@ -36,6 +36,16 @@ const UserMenu: React.FC<UserMenuProps> = ({
     router.push('/aboutUs');
   }, []);
 
+  const onClick = ( modal : () => void) => {
+    toggleOpen();
+    modal();
+  }
+
+  const onSignOut = () => {
+    toggleOpen();
+    signOut();
+  }
+
   return ( 
     <div className="relative">
       <div className="flex flex-row items-center gap-3">
@@ -109,18 +119,18 @@ const UserMenu: React.FC<UserMenuProps> = ({
                 <hr />
                 <MenuItem 
                   label="Logout" 
-                  onClick={() => signOut()}
+                  onClick={() => onSignOut()}
                 />
               </>
             ) : (
               <>
                 <MenuItem 
                   label="Login" 
-                  onClick={loginModal.onOpen}
+                  onClick={() => onClick(loginModal.onOpen)}
                 />
                 <MenuItem 
                   label="Sign up" 
-                  onClick={registerModal.onOpen}
+                  onClick={()=>onClick(registerModal.onOpen)}
                 />
               </>
             )}
