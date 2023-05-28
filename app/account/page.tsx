@@ -173,14 +173,6 @@ const Account = () => {
                 watch={watch}
             />
             <InputAccount
-                id={"targetWeight"}
-                label={"Target Weight"}
-                register={register}
-                errors={errors}
-                control={control}
-                watch={watch}
-            />
-            <InputAccount
                 id="size"
                 label="Size"
                 disabled={false}
