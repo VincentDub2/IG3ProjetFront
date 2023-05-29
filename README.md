@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# EatTrack
 
-## Getting Started
+## Description
 
-First, run the development server:
+The website offers users the ability to track their nutritional intake throughout the day, helping them maintain a balanced diet. It provides a daily requirements calculator that takes into account information such as weight, height, age, gender, and physical activity level of each user to provide personalized recommendations.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+Furthermore, users have the option to add foods to a common database. This allows them to contribute to the enrichment of the database by adding foods that are not already listed. They can also record the foods they have consumed by specifying the exact quantity. This enables them to keep an accurate journal of their daily food intake and better understand their overall nutritional intake.
+
+With these features, the website offers users a convenient and effective way to monitor their diet, calculate their daily nutritional needs, and maintain a detailed record of their food consumption. This allows them to make informed decisions regarding nutrition and promote a healthy lifestyle.
+
+## Installation
+
+to start the server
+```
+npm run dev 
+```
+or
+
+to build the project
+```
+npm run build
+```
+### Prerequisites
+
+- Node.js
+- npm
+- Next.js
+
+For install all dependencies run:
+
+```
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Deployment
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+My website is deployed on Vercel at the following address: https://eattrack.vercel.app/
 
-[http://localhost:3000/api/hello](http://localhost:3000/api/hello) is an endpoint that uses [Route Handlers](https://beta.nextjs.org/docs/routing/route-handlers). This endpoint can be edited in `app/api/hello/route.ts`.
+## Backend
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+The backend is build with Node.js and Express.js.
 
-## Learn More
+The backend is deployed on AWS EC2 at the following address: http://api.eattrack.net:8080/
 
-To learn more about Next.js, take a look at the following resources:
+## Technologies
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Next.js
+- React.js
+- Node.js
+- Typescript
+- Tailwindcss
+- Hot toast
+- React-hook-form
+- React-icons
+- NextAuth.js
+- Swiper.js
+- React-chartjs-2
+- Axios
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Use Case Diagram (in french)
 
-## Deploy on Vercel
+![UseCase.svg](./UseCase.svg)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Authors
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Vincent Dubuc
+
+## License
+
+This project was developed for the projet web course IG3.
+- Développement d'applications Web at Polytech Montpellier. 
+
