@@ -53,7 +53,7 @@ Our application is deployed on Vercel and is accessible at: [https://eattrack.ve
 
 Our backend is engineered using Node.js and Express.js.
 
-The backend server is hosted on AWS EC2 and can be accessed at: [http://api.eattrack.net:8080/](http://api.eattrack.net:8080/)
+The backend server is hosted on AWS EC2 and can be accessed at: [https://api.eattrack.net:8080/](https://api.eattrack.net:8080/)
 
 ## 🛠️ Technologies
 
