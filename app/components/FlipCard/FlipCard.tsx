@@ -42,11 +42,11 @@ const FlipCard: React.FC<FlipCardProps> = ({ image, title, description, recipe, 
 
             <div onClick={handleClick} className="w-64 h-96 bg-white rounded-lg shadow-xl p-6 flex flex-col justify-between">
                 <div>
-                    <h2 className="text-2xl font-bold mb-2">Recette</h2>
+                    <h2 className="text-2xl font-bold mb-2">Recipe</h2>
                     <p>{description}</p>
                 </div>
                 <div>
-                    <h2 className="text-xl font-bold mb-2">Information Nutritionnelle</h2>
+                    <h2 className="text-xl font-bold mb-2">Nutritional Information</h2>
                     <p>Protein: {protein}g</p>
                     <p>Carbohydrates: {carbohydrates}g</p>
                     <p>Fats: {fats}g</p>
