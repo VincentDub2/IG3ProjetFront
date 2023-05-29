@@ -1,16 +1,23 @@
-# EatTrack
+# EatTrack Web Application
 
-## Description
+Welcome to the official repository of the EatTrack web application. This is a comprehensive tool aimed at assisting users in tracking their daily nutritional intake, promoting a well-balanced diet through an interactive and user-friendly interface.
 
-The website offers users the ability to track their nutritional intake throughout the day, helping them maintain a balanced diet. It provides a daily requirements calculator that takes into account information such as weight, height, age, gender, and physical activity level of each user to provide personalized recommendations.
+## 📝 Description
 
-Furthermore, users have the option to add foods to a common database. This allows them to contribute to the enrichment of the database by adding foods that are not already listed. They can also record the foods they have consumed by specifying the exact quantity. This enables them to keep an accurate journal of their daily food intake and better understand their overall nutritional intake.
+EatTrack provides an advanced daily requirement calculator that adjusts its recommendations based on a user's unique information, including weight, height, age, gender, and physical activity level. This personalized approach ensures a more accurate guideline for users to follow.
 
-With these features, the website offers users a convenient and effective way to monitor their diet, calculate their daily nutritional needs, and maintain a detailed record of their food consumption. This allows them to make informed decisions regarding nutrition and promote a healthy lifestyle.
+In addition, users can contribute to our expansive food database by adding new items. By recording the foods and respective quantities they've consumed, users maintain an accurate food journal that aids them in understanding their nutritional habits better.
 
-## Installation
+With EatTrack, users have a powerful tool at their disposal for monitoring their diet, calculating their daily nutritional needs, and keeping track of their eating habits. All of these features promote informed decisions and healthy lifestyle choices.
 
-to start the server
+## 🚀 Getting Started
+
+Here's how you can set up EatTrack in your local environment.
+
+### 📥 Installation and Setup
+
+To start the server, execute:
+
 ```
 npm run dev 
 ```
@@ -20,53 +27,60 @@ to build the project
 ```
 npm run build
 ```
-### Prerequisites
+
+### ⚙️ Prerequisites
+
+You need to have the following tools installed on your system:
 
 - Node.js
 - npm
 - Next.js
 
-For install all dependencies run:
+To install all the dependencies, run:
+
+
 
 ```
 npm install
 ```
 
-## Deployment
 
-My website is deployed on Vercel at the following address: https://eattrack.vercel.app/
+## 🌐 Deployment
 
-## Backend
+Our application is deployed on Vercel and is accessible at: [https://eattrack.vercel.app/](https://eattrack.vercel.app/)
 
-The backend is build with Node.js and Express.js.
+## 🔧 Backend
 
-The backend is deployed on AWS EC2 at the following address: http://api.eattrack.net:8080/
+Our backend is engineered using Node.js and Express.js.
 
-## Technologies
+The backend server is hosted on AWS EC2 and can be accessed at: [http://api.eattrack.net:8080/](http://api.eattrack.net:8080/)
+
+## 🛠️ Technologies
+
+EatTrack employs a range of modern technologies, including:
 
 - Next.js
 - React.js
 - Node.js
-- Typescript
-- Tailwindcss
-- Hot toast
-- React-hook-form
-- React-icons
+- TypeScript
+- Tailwind CSS
+- Hot Toast
+- React Hook Form
+- React Icons
 - NextAuth.js
 - Swiper.js
-- React-chartjs-2
+- React Chartjs 2
 - Axios
 
-## Use Case Diagram (in french)
+## 📊 Use Case Diagram (in French)
 
-![UseCase.svg](./UseCase.svg)
+![Use Case Diagram](./UseCase.svg)
 
-## Authors
+## 👨‍💻 Authors
 
 Vincent Dubuc
 
-## License
+## 📄 License
 
-This project was developed for the projet web course IG3.
-- Développement d'applications Web at Polytech Montpellier. 
+This project was developed for the 'Projet Web' course (Web Project) IG3 - Développement d'applications Web at Polytech Montpellier.
 
